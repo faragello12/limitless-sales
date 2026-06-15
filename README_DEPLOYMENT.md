@@ -75,11 +75,31 @@ Render supports Node.js web services.
 
 ## 4. Vercel / Netlify
 
-This project uses a custom Express server and is not directly compatible with Vercel/Netlify static hosting.
+### الأفضل: Vercel
+Vercel هو الخيار الأفضل بين الاثنين عندما تريد تشغيل هذا المشروع لأنه يدعم تطبيقات Node.js. المهم هنا هو أن تقوم بإعداد قاعدة بيانات خارجية حقيقية عبر `DATABASE_URL` لأن SQLite المحلي على Vercel لا يبقى بعد إعادة نشر.
 
-If you want to use Vercel, deploy it as a serverless function or use a platform that supports Node.js servers.
+- Vercel يدعم تشغيل Express كخدمة serverless عبر `@vercel/node`
+- إذا لم تحدد `DATABASE_URL`، سيستخدم التطبيق SQLite محليًا في `/tmp/limitless.db` على Vercel، لكن هذه البيانات ستكون مؤقتة في بيئة serverless
+- إذا أردت نشر حقيقي طويل المدى، استخدم `DATABASE_URL` مع PostgreSQL أو قاعدة بيانات خارجية أخرى، ولا تعتمد على SQLite المحلي
+- أضف متغير البيئة `DATABASE_URL` في إعدادات المشروع على Vercel مع رابط اتصال PostgreSQL
 
-## 4. Recommendations
+### Netlify
+Netlify لا يدعم خادم Express كامل بشكل مباشر إلا إذا حولت كل نقطة نهاية إلى وظائف Serverless منفصلة داخل `netlify/functions`. لذلك هو أقل مناسبة هنا من Vercel.
+
+### Vercel Deployment Steps
+1. ثبت حساب مجاني على https://vercel.com
+2. اربط المستودع من GitHub
+3. أضف ملف `vercel.json` في جذر المشروع (موجود بالفعل)
+4. عيّن متغيرات البيئة في إعدادات المشروع على Vercel:
+   - `JWT_SECRET`
+   - `ALLOWED_ORIGIN` (رابط التطبيق على Vercel)
+   - `ADMIN_PASSWORD`
+   - `SALES_PASSWORD`
+5. اضغط Deploy
+
+> ملاحظة: إذا أردت بيانات دائمة، ستحتاج قاعدة بيانات خارجية لأن ملفات SQLite المحلية على Vercel لا تبقى بعد إعادة النشر.
+
+## 5. Recommendations
 
 - Use PostgreSQL or MySQL in production.
 - Do not expose `database/limitless.db` directly.

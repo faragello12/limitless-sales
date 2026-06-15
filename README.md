@@ -49,6 +49,8 @@ cd limitless-sales
 npm install
 ```
 
+> Note: local SQLite mode uses optional native dependency `better-sqlite3`, which may require Python and build tools on Windows. If you prefer persistent deployment, set `DATABASE_URL` for Postgres.
+
 ### 2. Seed Sample Data
 ```bash
 npm run seed
@@ -94,7 +96,7 @@ limitless-sales/
 ## 🔌 Tech Stack
 
 - **Backend**: Node.js + Express
-- **Database**: SQLite (via better-sqlite3)
+- **Database**: PostgreSQL via `DATABASE_URL` or local SQLite via optional `better-sqlite3`
 - **Auth**: JWT + bcryptjs
 - **Frontend**: Vanilla JS + Tailwind CSS (CDN) + Chart-free custom CSS charts
 - **No build step** — runs directly!
@@ -177,6 +179,7 @@ Before deploying to production:
 - This app is a Node/Express server and can be deployed on platforms that support custom servers.
 - **SQLite is not ideal on Vercel** because the filesystem is ephemeral; data will not persist between deployments.
 - For Vercel, use a hosted database service and update the app to connect to it instead of local SQLite.
+- When running on Vercel without `DATABASE_URL`, SQLite is stored in `/tmp/limitless.db` and data is temporary.
 
 ## 🎯 Built For Limitless
 

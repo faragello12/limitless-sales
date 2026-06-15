@@ -4,9 +4,10 @@
   "description": "Sales management system for Limitless Marketing Company - Uses Node.js built-in SQLite",
   "main": "server.js",
   "scripts": {
-    "start": "node --experimental-sqlite server.js",
-    "seed": "node --experimental-sqlite database/seed.js",
-    "dev": "node --experimental-sqlite server.js"
+    "start": "node server.js",
+    "seed": "node database/seed.js",
+    "dev": "node server.js",
+    "build": "echo \"No build needed\""
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -14,7 +15,11 @@
     "express": "^4.21.0",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^8.3.0"
   },
   "engines": {
     "node": ">=22.5.0"
